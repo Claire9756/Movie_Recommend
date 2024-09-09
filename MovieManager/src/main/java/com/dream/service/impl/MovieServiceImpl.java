@@ -32,28 +32,6 @@ public class MovieServiceImpl implements MovieService{
         Page<NewMovie> page = new Page<NewMovie>();
         page.setSize(10);
         query.setSize(10);
-        if (null != query) {
-            //判断当前页
-            if (null != query.getPage()) {
-                page.setPage(query.getPage());
-                query.setStartRow((query.getPage() - 1) * query.getSize());
-            }
-            if (null != query.getMovieName() && !"".equals(query.getMovieName().trim())) {
-                query.setMovieName(query.getMovieName().trim());
-            }
-            if (0 != (query.getCategoryId())) {
-                query.setCategoryId(query.getCategoryId());
-            }
-            page.setTotal(movieMapper.movieCount(query));
-            List<NewMovie> newMovieList = new ArrayList<>();
-            List<Movie> movieList = movieMapper.selectMovieListByQuery(query);
-            for (Movie movie: movieList) {
-                NewMovie newMovie = getMovieById(movie.getMovieid());
-                newMovieList.add(newMovie);
-            }
-            page.setRows(newMovieList);
-        }
-        return page;
     }
 
     // 删除电影
